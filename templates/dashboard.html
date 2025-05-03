@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+ {% block title %} Home {% endblock %}
+ {% block body %}
+    <div class="container custom_card" style="max-width: 400px;
+            margin: 100px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;">
+            {% if error%}
+              <center><div class="alert alert-danger" role="alert">{{error}}</div></center>
+              {% endif %}
+              {% if msg%}
+              <center><div class="alert alert-success" role="alert">{{msg}}</div></center>
+            {% endif %}
+        <h2 class="text-center mb-4">Welcome Back '{{college.college_name}}'</h2>
+    </div>
+    <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Total staff <br> <span style="color: aqua;">{{ college.total_staff}}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Teachning staff <br> <span style="color: aqua;">{{ college.teaching_staff_count}}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Non Teachning staff <br> <span style="color: aqua;">{{ college.non_teaching_staff_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Working staff <br> <span style="color: aqua;">{{ college.working_staff_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Transferred staff <br> <span style="color: aqua;">{{ college.transferred_staff_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Departed staff <br> <span style="color: aqua;">{{ college.departed_staff_count }}</span></h2>
+      </div>
+
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Total students <br> <span style="color: aqua;">{{ college.total_students_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">OnGoing students <br> <span style="color: aqua;">{{ college.ongoing_students_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Graduate students <br> <span style="color: aqua;">{{ college.graduate_students_count }}</span></h2>
+      </div>
+      <div class="custom_card">
+          <h2 class="text-center mb-4">Dropout students <br> <span style="color: aqua;">{{ college.dropout_students_count }}</span></h2>
+      </div>
+  </div>
+{% endblock %}

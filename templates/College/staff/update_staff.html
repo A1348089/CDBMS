@@ -1,0 +1,197 @@
+{% extends "College_Home.html" %}
+{% load static %}
+{% block contentRegister %}{% endblock %}
+{% block body %}
+<style>
+/* Styles for messages and form */
+.messages { 
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+.messages li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-left: 5px solid #f5c2c7;
+    position: relative;
+}
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+</style>
+<form class="container" action="{% url 'update_staff' id=staff.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <article class="row mt-3">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message }}
+                        <button class="close-btn" type="button" onclick="closeMessage(this);">&times;</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <script>
+            // Function to close the message on button click
+            function closeMessage(button) {
+                // Find the parent <li> element and hide it
+                const messageElement = button.closest('li');
+                messageElement.style.display = 'none';
+            }
+        </script>
+        
+        <div><h3>Staff Details</h3></div>
+        <div class="col-md-9">
+            <section class="row">
+                <div class="col-md-3">
+                    {{ staff_form.staff_type.label }}
+                    {{ staff_form.staff_type }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.staff_id.label }}
+                    {{ staff_form.staff_id }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.cfms_id.label }}
+                    {{ staff_form.cfms_id }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.salutation.label }} <br>
+                    {{ staff_form.salutation }}
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    {{ staff_form.first_name.label }}
+                    {{ staff_form.first_name }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.last_name.label }}
+                    {{ staff_form.last_name }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.date_of_birth.label }}
+                    <input class="common-field-size" type="date" name="date_of_birth" id="date_of_birth" value="{{ staff_form.instance.date_of_birth|date:'Y-m-d' }}">
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.gender.label }} <br>
+                    {{ staff_form.gender }}
+                </div>
+            </section>
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    {{ staff_form.mobile_no.label }}
+                    {{ staff_form.mobile_no }}
+                </div>
+                <div class="col-md-3">
+                    {{ staff_form.email.label }} <br>
+                    {{ staff_form.email }}
+                </div>
+            </section>
+        </div>
+
+        <!-- Profile image upload -->
+        <!-- Profile image upload -->
+        <div class="col-md-2">
+            <div class="card">
+                <label for="staff_form_photo">
+                    {% if staff_form.instance.photo %}
+                        <img src="{{ staff_form.instance.photo.url }}" alt="{{ staff_form.instance.first_name }} {{ staff_form.instance.last_name }}" class="card-img-top" id="profilePreview">
+                    {% else %}
+                        <img src="{% static 'img/profile.png' %}" alt="Default Profile" class="card-img-top" id="profilePreview">
+                    {% endif %}
+                </label>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <input type="file" id="staff_form_photo" name="photo" style="display: none;" onchange="previewImage(event)">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('staff_form_photo').click()">Change</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function previewImage(event) {
+                var file = event.target.files[0];
+                var output = document.getElementById('profilePreview');
+
+                if (file) {
+                    output.src = URL.createObjectURL(file);
+                    output.onload = function () {
+                        URL.revokeObjectURL(output.src); // Free up memory
+                    }
+                }
+            }
+        </script>
+        </div>
+    </article>
+
+    <!-- Designation and Staff Status -->
+    <section class="row mt-3" >
+        <div><h3>Designation</h3></div>
+        <div class="col-md-2" id="dept_container">
+            {{ staff_form.department.label }}
+            {{ staff_form.department }}
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.is_hod.label }}
+            {{ staff_form.is_hod }}
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.status.label }}
+            {{ staff_form.status }}
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.designation.label }}
+            {{ staff_form.designation }}
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.doj_in_govt_service.label }}
+            <input type="date" name="doj_in_govt_service" id="doj_in_govt_service" value="{{ staff_form.instance.doj_in_govt_service|date:'Y-m-d' }}">
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.doj_in_college.label }}
+            <input type="date" name="doj_in_college" id="doj_in_college" value="{{ staff_form.instance.doj_in_college|date:'Y-m-d' }}">
+        </div>
+    </section>
+
+    <!-- Other form fields for documents and bank details -->
+    <section class="row mt-3">
+        <div class="col-md-2">
+            {{ staff_form.salary.label }} <br>
+            {{ staff_form.salary }}
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.date_of_exite.label }}
+            <input type="date" name="date_of_exite" id="date_of_exite" value="{{ staff_form.instance.date_of_exite|date:'Y-m-d' }}">
+        </div>
+        <div class="col-md-2">
+            {{ staff_form.aadhar_number.label }}
+            {{ staff_form.aadhar_number }}
+        </div>
+        {% comment %} <div class="col-md-2">
+            {{ staff_form.aadhar_file.label }}
+            {{ staff_form.aadhar_file }}
+        </div> {% endcomment %}
+    </section>
+    <div class="col-12 mt-5 mb-5">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>
+
+{% endblock %}

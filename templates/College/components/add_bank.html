@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+/* Styles for messages and form */
+.common-field-size {
+    width: 150px;  /* Set your desired width */
+}
+.small-field-size {
+    width: 80px;  /* Set your desired width */
+    padding: 0.2rem;
+}
+
+.messages { 
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+.messages li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-left: 5px solid #f5c2c7;
+    position: relative;
+}
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+</style>
+<section class="container"> 
+    <form action="{% url 'manage_bank_details' entity_type=entity_type id=entity.id %}" method="post">
+        {% csrf_token %}
+        <!-- Bank Section -->
+        <section class="row mt-3" id="bank_section">
+            <div class="bg-primary my-3"><h3>Bank Details</h3></div>
+            <div class="col-md-2">
+                <label for="bank_account_num" class="form-label">Account Number</label>
+                {{ bank_form.bank_account_num }}
+            </div>
+            <div class="col-md-2">
+                <label for="bank_name" class="form-label">Bank Name</label>
+                {{ bank_form.bank_name }}
+            </div>
+            <div class="col-md-2">
+                <label for="bank_branch_name" class="form-label">Branch Name</label>
+                {{ bank_form.branch_name }}
+            </div>
+            <div class="col-md-2">
+                <label for="bank_ifsc_code" class="form-label">IFSC Code</label>
+                {{ bank_form.ifsc_code }}
+            </div>
+            <div class="col-12 mt-5 mb-5 d-flex justify-content-between">
+                {% if entity_type == 'staff' %}                     
+                    <a href="{% url 'view_staff' id=entity.id %}">Skip</a>                 
+                {% endif %}                 
+
+                {% if entity_type == 'student' %}                     
+                    <a href="{% url 'student_view' id=entity.id %}">Skip</a>                 
+                {% endif %}
+                <button class="btn btn-primary" type="submit" data-mdb-ripple-init>Save</button>
+            </div>
+        </section>
+    </form>
+</section>
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+<!-- Load Static Tag -->
+{% load static %}
+{% block body %}
+<form method="post" action="{% url 'create_staff' %}" enctype="multipart/form-data" class="container">
+    {% csrf_token %}
+    <article class="row mt-3">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message }}
+                        <button class="close-btn" type="button" onclick="closeMessage(this);">&times;</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <script>
+            // Function to close the message on button click
+            function closeMessage(button) {
+                // Find the parent <li> element and hide it
+                const messageElement = button.closest('li');
+                messageElement.style.display = 'none';
+            }
+        </script>
+        
+        <div class="bg-primary my-3"><h3>Staff Details</h3></div>
+        <div class="col-md-9">
+            <section class="row">
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{ form.staff_type.label }}
+                        {{ form.staff_type }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{ form.staff_id.label }}
+                        {{ form.staff_id }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{ form.cfms_id.label }}
+                        {{ form.cfms_id }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline common-field-size" data-mdb-input-init>
+                        {{ form.salutation.label }}
+                        {{ form.salutation }}
+                    </div>
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    {{ form.first_name.label }}
+                    {{ form.first_name }}
+                </div>
+                <div class="col-md-3">
+                    {{ form.last_name.label }}
+                    {{ form.last_name }}
+                </div>
+                <div class="col-md-3">
+                    {{ form.mobile_no.label }}
+                    {{ form.mobile_no }}
+                </div>
+                <div class="col-md-3">
+                    {{ form.email.label }} <br>
+                    {{ form.email }}
+                </div>
+            </section>
+
+            <!-- Other form fields for documents and bank details -->
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    {{ form.date_of_birth.label }}
+                    <input type="date" name="date_of_birth" id="date_of_birth">
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline common-field-size" data-mdb-input-init>
+                        {{ form.gender.label }} <br>
+                        {{ form.gender }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{ form.aadhar_number.label }}
+                    {{ form.aadhar_number }}
+                </div>
+                <div class="col-md-3">
+                    {{ form.aadhar_file.label }}
+                    {{ form.aadhar_file }}
+                </div>
+            </section>
+            
+        </div>
+
+        <!-- Profile image upload -->
+        <div class="col-md-2">
+            <div class="card">
+                <img src="{% static 'img/profile.png/' %}" class="card-img-top" alt="Profile Image">
+                <div class="card-body">
+                    {{ form.photo.label }}
+                    {{ form.photo }}
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Designation and Staff Status -->
+    <section class="row mt-3" >
+        <div class="bg-primary my-3"><h3>Work information</h3></div>
+        <div class="col-md-4" id="dept_container" style="display: none;">
+            <div class="col-md-8 common-field-size">
+                {{ form.department.label }} <br>
+                {{ form.department }}
+            </div>
+            <div class="col-md-4 mt-3">
+                {{ form.is_hod.label }}
+                {{ form.is_hod }}
+            </div>
+        </div>
+        <div class="col-md-2 common-field-size">
+            {{ form.status.label }} <br>
+            {{ form.status }}
+        </div>
+        <div class="col-md-2">
+            {{ form.designation.label }} <br>
+            {{ form.designation }}
+        </div>
+        <div class="col-md-2">
+            {{ form.doj_in_govt_service.label }} <br>
+            <input type="date" name="doj_in_govt_service" id="doj_in_govt_service">
+        </div>
+        <div class="col-md-2">
+            {{ form.doj_in_college.label }} <br>
+            <input type="date" name="doj_in_college" id="doj_in_college">
+        </div>
+        <div class="col-md-2">
+            {{ form.previous_working_station.label }} <br>
+            {{ form.previous_working_station }}
+        </div>
+    </section>
+    <section id="staffstatus" class="row mt-3">
+        <!-- This should be the div where dynamic fields are added -->
+        <!-- Dynamic Fields will be added here -->
+    </section>
+    <section class="row mt-3">
+    </section>
+    <div class="col-12 mt-5 mb-5">
+        <button class="btn btn-primary" type="submit" data-mdb-ripple-init>Save&Next</button>
+    </div>
+</form>
+{% endblock %}

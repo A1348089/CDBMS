@@ -1,0 +1,52 @@
+{% extends "home.html" %} 
+{% block title %} Register College {% endblock %}
+{% block contentRegister %} 
+<!-- SignUp Modal Start -->
+<div id="signup">
+    {% if form.errors %}
+        <div class="error-messages text-danger">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <button class="close-btn" id="close_signup">&times;</button>
+    <form method="post" action="{% url 'register_college' %}">
+        {% csrf_token %}
+        <section class="d-flex flex-column align-items-center mt-5">
+            <h2 class="text-uppercase text-center">Register College</h2>
+            <div class="p-2 d-flex flex-column align-items-start">
+                {{form.college_code.label}} 
+                {{form.college_code}}
+            </div>
+            <div class="p-2 d-flex flex-column align-items-start">
+                {{form.college_name.label}} 
+                {{form.college_name}}
+            </div>
+            <div class="p-2 d-flex flex-column align-items-start">
+                {{form.college_email.label}} 
+                {{form.college_email}}
+            </div>
+            <div class="p-2 d-flex flex-column align-items-start">
+                {{form.phone_no.label}} 
+                {{form.phone_no}}
+            </div>
+            <div class="p-2">
+                <button type="submit" class="btn-primary px-5 py-1">Register</button>
+            </div>
+            <h6>Already have an account? <a href="{% url 'login' %}">Login Here.......</a></h6>
+        </section>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block body %}
+{% endblock %}

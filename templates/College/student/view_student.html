@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contentRegister %}
+
+{% endblock %}
+
+{% block body %}
+
+<style>
+        /* CSS to style every second p tag */
+        .col-md-3 p:nth-of-type(2n) {
+            background-color: #f0f0f0; /* Example styling */
+            color: #333; /* Example styling */
+            padding: 5px; /* Example styling */
+            border: 1px solid #ddd; /* Example styling */
+        }
+        .col-md-2 p:nth-of-type(2n) {
+            background-color: #f0f0f0; /* Example styling */
+            color: #333; /* Example styling */
+            padding: 5px; /* Example styling */
+            border: 1px solid #ddd; /* Example styling */
+        }
+        .col-md-1 p:nth-of-type(2n) {
+            background-color: #f0f0f0; /* Example styling */
+            color: #333; /* Example styling */
+            padding: 5px; /* Example styling */
+            border: 1px solid #ddd; /* Example styling */
+        }
+</style>
+
+<main class="container-fluid p-5">
+    <article class="row mt-3">
+        <div><h3>Student Details</h3></div>
+        <div class="col-md-10"> <!-- Column 1 start -->
+
+            <section class="row">  <!-- Student Details End -->
+                <div class="col-md-3">
+                    <p class="form-label">OAMDC No</p>
+                    <p>{{ student.OAMDC_NO }}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="form-label">First Name</p>
+                    <p>{{ student.first_name }}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="form-label">Last Name</p>
+                    <p>{{ student.last_name }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Mother Tongue</p>
+                    <p>{{ student.mother_tongue }}</p>
+                </div>
+            </section>
+
+            <section class="row mt-2">
+                <div class="col-md-3">
+                    <p class="form-label">Nationality</p>
+                    <p>{{ student.nationality }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Place of Birth</p>
+                    <p>{{ student.place_of_birth }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Mobile Number</p>
+                    <p>{{ student.mobile_no }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Email</p>
+                    <p>{{ student.email }}</p>
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    <p class="form-label">Blood Group</p>
+                    <p>{{ student.blood_group }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Date of Birth</p>
+                    <p>{{ student.date_of_birth }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Gender</p>
+                    <p>{{ student.gender }}</p>
+                </div>
+            </section>
+            <!-- Address End -->
+
+        </div> <!-- Column 1 End -->
+
+        <div class="col-md-2">
+            <div class="card">
+                {% if student.pic %}
+                    <img src="{{ student.pic.url }}" class="card-img-top" alt="{{ student.last_name }}">
+                {% else %}
+                    <img src="{% static 'img\profile.png' %}" class="card-img-top" alt="Default Image">
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    <!-- Student Details End -->
+    <section class="row mt-3">
+        {% if student.address %}
+            <div style="display: flex; align-items: center;">
+                <h3>Address</h3>
+                <a class="btn text-primary" href="{% url "manage_address_details" entity_type="student" id=student.id %}">Edit</a>
+            </div>
+            <div class="col-md-1">
+                <p class="form-label">Door No.</p>
+                <p>{{ student.address.doorNo }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">Village/Town</p>
+                <p>{{ student.address.village }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">Street</p>
+                <p>{{ student.address.street }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">State</p>
+                <p>{{ student.address.state.name }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">District</p>
+                <p>{{ student.address.district.district }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">Mandal</p>
+                <p>{{ student.address.mandal }}</p>
+            </div>
+            <div class="col-md-2">
+                <p class="form-label">Pincode</p>
+                <p>{{ student.address.pin_code }}</p>
+            </div>
+        {% else %}
+         <div style="display: flex; align-items: center;">
+            <p class="text-danger">Address details are not available for this student.</p>
+            <a href="{% url "manage_address_details" entity_type="student" id=student.id %}">Add Address</a>
+        </div>
+        {% endif %}
+    </section>
+    <!-- Academic Details Start -->
+    <section class="row mt-3">
+        <div><h3>Examination Details</h3></div>
+        <div class="col-md-3">
+            <p class="form-label">Program</p>
+            <p>{{ student.program.program_full_name }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Group</p>
+            <p>{{ student.subject_combination.combination_full_form }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Medium</p>
+            <p>{{ student.medium.medium }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Year of Admission</p>
+            <p>{{ student.year_of_admission }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Student Status</p>
+            <p>{{ student.status }}</p>
+        </div>
+    </section>
+    <!-- Academic Details End -->
+    <!-- SSC START -->
+    <section class="row mt-3">
+        <div><h3>SSC Details</h3></div>
+
+        <div class="col-md-2">
+            <p class="form-label">SCC Hall Ticket</p>
+            <p>{{ student.ssc_hall_ticket }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">School Name</p>
+            <p>{{ student.ssc_school_name }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">SSC Passout Year</p>
+            <p>{{ student.ssc_year_of_study }}</p>
+        </div>
+        <div class="col-md-1">
+            <p class="form-label">10th Marks</p>
+            <p>{{ student.ssc_marks }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">10th Marks file</p>
+            {% if student.ssc_marks_file %}
+                <p><a href="{{student.ssc_marks_file.url}}" target="_blank">Download 10th Marks File</a></p>
+            {% else %}
+                <p>File not available</p>
+            {% endif %}
+        </div>
+    </section>
+    <!-- SSC END -->
+    <!-- Intermediate Start -->
+    <section class="row mt-3">
+        <div><h3>Intermediate Details</h3></div>
+        <div class="col-md-2">
+            <p class="form-label">Intermediate Hall Ticket</p>
+            <p>{{ student.intermediate_hall_ticket_no }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Intermediate College Name</p>
+            <p>{{ student.intermediate_college_name }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Passout Year</p>
+            <p>{{ student.intermediate_year_of_study }}</p>
+        </div>
+        <div class="col-md-1">
+            <p class="form-label">12th Marks</p>
+            <p>{{ student.intermediate_marks }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Intermediate Marks file</p>
+            {% if student.intermediate_marks_file %}
+                <p><a href="{{student.intermediate_marks_file.url}}" target="_blank">Download Intermediate Marks File</a></p>
+            {% else %}
+                <p>File not available</p>
+            {% endif %}
+        </div>
+    </section>
+    <!-- Intermediate End -->
+    <!-- Aadhar & Income Start -->
+    <section class="row mt-3">
+        <div><h3>Student Documents</h3></div>
+        <div class="col-md-3">
+            <p class="form-label">Aadhar Number</p>
+            <p>{{ student.aadhar_no }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Aadhar file</p>
+            {% if student.aadhar_file %}
+                <p><a href="{{student.aadhar_file.url}}" target="_parent">Download Aadhar File</a></p>
+            {% else %}
+                <p>File not available</p>
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Income Certificate Number</p>
+            <p>{{ student.income_certificate_no }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Income Certificate</p>
+            {% if student.income_certificate_file %}
+                <p><a href="{{ student.income_certificate_file.url }}" target="_blank">Download Income Certificate</a></p>
+            {% else %}
+                <p>File not available</p>
+            {% endif %}
+        </div>
+    </section>
+    <!-- Aadhar & Income End -->
+    <!-- Caste Start -->
+    <section class="row mt-3">
+        <div class="col-md-3">
+            <p class="form-label">Caste</p>
+            <p>{{ student.caste }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Caste Certificate Number</p>
+            <p>{{ student.caste_certificate_no }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Caste Certificate File</p>
+            {% if student.income_certificate_file %}
+                <p><a href="{{ student.caste_certificate_file.url }}" target="_blank">Download Caste Certificate</a></p>
+            {% else %}
+                <p>File not available</p>
+            {% endif %}
+        </div>
+    </section>
+    <!-- Caste End -->
+    <!-- Bank Details Start -->
+    {% if student.bank %}
+        <section class="row mt-3">
+            <div style="display: flex; align-items: center;">
+                <h3>Bank Details</h3>
+                <a class="btn text-primary" href="{% url "manage_bank_details" entity_type="student" id=student.id %}">Edit</a>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Bank Account Number</p>
+                <p>{{ student.bank.bank_account_num }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Bank Name</p>
+                <p>{{ student.bank.bank_name }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">IFSC Code</p>
+                <p>{{ student.bank.ifsc_code }}</p>
+            </div>
+        </section>
+    {% else %}
+        <section style="display: flex; align-items: center;">
+            <p class="text-danger">Bank details are not available for this student.</p>
+            <a class="btn text-primary" href="{% url "manage_bank_details" entity_type="student" id=student.id %}">Add Bank details</a>
+        </section>
+    {% endif %}
+    <!-- Bank Details End -->
+    <!-- Parent Details Start -->
+    {% if student.parent %}
+        <section class="row mt-3">
+            <div style="display: flex; align-items: center;">
+                <h3>Parent Details</h3>
+                <a class="btn text-primary" href="add_parent/">Edit</a>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Father's Name</p>
+                <p>{{ student.parent.father_name }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Mother's Name</p>
+                <p>{{ student.parent.mother_name }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Father's Aadhar Number</p>
+                <p>{{ student.parent.father_aadhar }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Mother's Aadhar Number</p>
+                <p>{{ student.parent.mother_aadhar }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Father's Mobile Number</p>
+                <p>{{ student.parent.mobile }}</p>
+            </div>
+        </section>
+    {% else %}
+    <section style="display: flex; align-items: center;">
+        <p class="text-danger">Parents details are not available for this student.</p>
+        <a class="btn text-primary" href="add_parent/">Add Parents details</a>    
+    </section>
+    {% endif %}
+    <!-- Parent Details End -->
+     <div class="col-12 mt-5 mb-5">
+        <a class="btn btn-primary" href="edit/">Edit</a>
+        <a class="btn btn-primary" href="delete/">Delete</a>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "College_Home.html" %}
+{% block contentRegister %}{% endblock %}
+{% block body %}
+<section>
+  <h2>Delete Staff</h2>
+  
+  <p>Are you sure you want to delete <strong>{{ staff.first_name }} {{ staff.last_name }}</strong> from <strong> {{ staff.department.departmentName }} </strong> ?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'staff_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</section>
+{% endblock %}

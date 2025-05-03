@@ -1,0 +1,237 @@
+{% extends "College/index.html" %}
+{% block body %}
+<form action="" method="post" class="container" enctype="multipart/form-data">
+    <article class="row mt-3"> art
+        <h3>Student Details</h3>
+        <div class="col-md-10"> <!-- Column 1 start -->
+            <div class="row">  <!-- Row 1 start -->
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="oamdcNo" class="form-label">Admission No</label>
+                        <input type="text" class="form-control" name="admission_no" id="admission_no" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="student_first_name" id="studFirstName" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="student_last_name" id="studLastName" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studPic" class="form-label">Profile Image</label>
+                        <input class="form-control" type="file" id="studPic" name="student_pic">
+                    </div>
+                </div>
+            </div>  <!-- Row 1 End -->
+            
+            <div class="row mt-2 mt-4"> <!-- Row 2 Start -->
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studMobileNo" class="form-label">Mobile Number</label>
+                        <input type="text" pattern="[0-9]{10}" class="form-control" name="student_mobile_no" id="studMobileNo" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    Gender
+                    <div class="form-outline mt-2" data-mdb-input-init>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="studMale" value="Male">
+                            <label class="form-check-label" for="studMale">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="studFemale" value="Female">
+                            <label class="form-check-label" for="studFemale">Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studDob" class="form-label">Date of Birth</label>
+                        <input class="form-control" type="date" id="studDob" name="dob">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studMotherTongue" class="form-label">Mother Tongue</label>
+                        <select id="studMotherTongue" name="mother_tongue" class="form-select">
+                            <option selected>Choose...</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="English">English</option>
+                        </select>
+                    </div>
+                </div>
+            </div> <!-- Row 2 End -->
+            
+            <div class="row mt-2 mt-4"> <!-- Row 3 Start -->
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studNationality" class="form-label">Nationality</label>
+                        <select id="studNationality" name="nationality" class="form-select">
+                            <option selected>Choose...</option>
+                            <option value="Indian">Indian</option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studBloodGroup" class="form-label">Blood Group</label>
+                        <input type="text" class="form-control" name="blood_group" id="studBloodGroup" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        <label for="studPob" class="form-label">Place of Birth</label>
+                        <input type="text" class="form-control" name="place_of_birth" id="studPob" />
+                    </div>
+                </div>
+            </div> <!-- Row 3 End -->
+            <section class="mt-4">
+                <h4>Previous Education Details</h4>
+                <div class="row mt-2 mt-4"> <!-- Row 4 Start -->
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="sscHallTicket" class="form-label">SSC Hall Ticket</label>
+                            <input type="text" class="form-control" name="ssc_hall_ticket" id="sscHallTicket" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="intermediateHallTicketNo" class="form-label">Intermediate Hall Ticket No</label>
+                            <input type="text" class="form-control" name="intermediate_hall_ticket_no" id="intermediateHallTicketNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="intermediateCollegeName" class="form-label">Intermediate College Name</label>
+                            <input type="text" class="form-control" name="intermediate_college_name" id="intermediateCollegeName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="intermediateCollegeYearOfStudy" class="form-label">Intermediate College Year of Study</label>
+                            <input type="number" class="form-control" name="intermediate_college_year_of_study" id="intermediateCollegeYearOfStudy" />
+                        </div>
+                    </div>
+                </div> <!-- Row 4 End -->
+
+                <div class="row mt-2"> <!-- Row 5 Start -->
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="intermediateMarks" class="form-label">Intermediate Marks</label>
+                            <input type="number" class="form-control" step="0.01" name="intermediate_marks" id="intermediateMarks" />
+                        </div>
+                    </div>
+                </div> <!-- Row 5 End -->
+            </section>    
+            <section class="mt-4">
+                <h4>Documents</h4>
+                <div class="row mt-2"> <!-- Row 6 Start -->
+
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="studAadhar" class="form-label">Aadhar Number</label>
+                            <input type="text" pattern="[0-9]{12}" class="form-control" name="aadhar_no" id="studAadhar" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="studAadharFile" class="form-label">Aadhar File</label>
+                            <input type="file" class="form-control" name="aadhar_file" id="studAadharFile" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="incomeCertificateNo" class="form-label">Income Certificate No</label>
+                            <input type="text" class="form-control" name="income_certificate_no" id="incomeCertificateNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="incomeCertificateFile" class="form-label">Income Certificate File</label>
+                            <input type="file" class="form-control" name="income_certificate_file" id="incomeCertificateFile" />
+                        </div>
+                    </div>
+                </div> <!-- Row 6 End -->
+
+                <div class="row mt-2"> <!-- Row 7 Start -->
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="income" class="form-label">Income</label>
+                            <input type="number" class="form-control" name="income" id="income" />
+                        </div>
+                    </div> 
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="caste" class="form-label">Caste</label>
+                            <input type="text" class="form-control" name="caste" id="caste" />
+                        </div>
+                    </div>              
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="casteCertificateNo" class="form-label">Caste Certificate No</label>
+                            <input type="text" class="form-control" name="caste_certificate_no" id="casteCertificateNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-outline" data-mdb-input-init>
+                            <label for="casteCertificateFile" class="form-label">Caste Certificate File</label>
+                            <input type="file" class="form-control" name="caste_certificate_file" id="casteCertificateFile" />
+                        </div>
+                    </div>
+                </div> <!-- Row 7 End -->
+            </section>
+                
+
+                <section class="mt-4">
+                    <h4>Bank Details</h4>
+                    <div class="row mt-2"> <!-- Row 8 Start --> 
+                        <div class="col-md-3">
+                            <div class="form-outline" data-mdb-input-init>
+                                <label for="incomeCertificateNo" class="form-label">Bank Account No</label>
+                                <input type="text" class="form-control" name="bank_account_no" id="bankAccountNo" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-outline" data-mdb-input-init>
+                                <label for="bankIFSC" class="form-label">Bank IFSC</label>
+                                <input type="text" class="form-control" name="bank_ifsc" id="bankIFSC" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-outline" data-mdb-input-init>
+                                <label for="bankBranch" class="form-label">Bank Branch</label>
+                                <input type="text" class="form-control" name="bank_branch" id="bankBranch" />
+                            </div>
+                        </div>
+                    </div>  <!-- Row 8 End --> 
+                </section>
+                
+        </div>  <!-- Column 1 End -->
+        
+        <div class="col-md-2"> <!-- Column 2 Start -->
+            <div class="card">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class="card-img-top" alt="studPic" >
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label for="studPic" class="form-label">Profile Image</label>
+                        <input class="form-control" type="file" id="studPic" name="student_pic">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Column 2 End -->
+        
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit" data-mdb-ripple-init>Submit form</button>
+        </div>
+    </article>
+</form>
+
+{% endblock  %}

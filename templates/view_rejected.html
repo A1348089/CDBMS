@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="table-responsive mt-5">
+  <table id="basic-datatables" class="display table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>College Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Area Pin</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for college in colleges %}
+      <tr>
+        <td>{{college.college_code}}</td>
+        <td>{{college.college_name}}</td>
+        <td>{{college.college_email}}</td>
+        <td>{{college.phone_no}}</td>
+        <td>{{college.state}}</td>
+        <td>{{college.district}}</td>
+        <td>{{college.area_pincode}}</td>
+        <td>{{college.status}}</td>
+        <td>
+          <a href="{% url 'activate' college.id %}">
+              <button style="background-color: green; color: white;">Accept</button>
+          </a>
+        </td>
+      
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<form  method="post" action="{% url 'create_student' %}" enctype="multipart/form-data" class="container">
+    {% csrf_token %}
+    <article class="row mt-3">
+        <!-- Display success and error messages if available -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message }}
+                        <button class="close-btn" type="button" onclick="closeMessage(this);">&times;</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <script>
+            // Function to close the message on button click
+            function closeMessage(button) {
+                const messageElement = button.closest('li');
+                if (messageElement) {
+                    messageElement.style.display = 'none';
+                }
+            }
+        </script>
+        <div class="bg-primary my-3"><h3>Student Details</h3></div>
+        <div class="col-md-9"> <!-- Column 1 start -->
+
+            <section class="row">  <!-- Student Details End -->
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{ student_form.OAMDC_NO.label }}
+                        {{student_form.OAMDC_NO}}
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{ student_form.first_name.label }}
+                        {{student_form.first_name}}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.last_name.label}}
+                        {{student_form.last_name}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline common-field-size" data-mdb-input-init>
+                        {{student_form.mother_tongue.label}} <br>
+                        {{student_form.mother_tongue}}
+                    </div>
+                </div>
+                
+            </section>
+
+            <section class="row mt-2">
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.nationality.label}}
+                        {{student_form.nationality}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.place_of_birth.label}}
+                        {{student_form.place_of_birth}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.mobile_no.label}}
+                        {{student_form.mobile_no}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.email.label}}
+                        {{student_form.email}}
+                    </div>
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    <div class="form-outline" data-mdb-input-init>
+                        {{student_form.blood_group.label}}
+                        {{student_form.blood_group}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-2">
+                        <div class="form-outline common-field-size" data-mdb-input-init>
+                            {{student_form.date_of_birth.label}}
+                            <input type="date" name="date_of_birth" id="date_of_birth">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-outline common-field-size" data-mdb-input-init>
+                        {{student_form.gender.label}} <br>
+                        {{student_form.gender}}
+                    </div>
+                </div>
+            </section>
+        </div> <!-- Column 1 End -->
+
+        <div class="col-md-2"> <!-- Column 2 Start -->
+            <div class="card">
+                <img src="{% static 'img/profile.png' %}" class="card-img-top" alt="Profile Image">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label for="student_form_pic" class="form-label">Profile Image</label>
+                        {{ student_form.pic }}
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Column 2 End -->
+    </article>
+    <!-- student_form Details End -->
+    <!-- Accademic Details Start -->
+    <section class="row mt-3">
+        <div class="bg-primary my-3"><h3>Examination Details</h3></div>
+        <div class="col-md-2">
+            <div class="form-outline common-field-size" data-mdb-input-init>
+                {{ student_form.program.label }}
+                {{ student_form.program }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="common-field-size" data-mdb-input-init>
+                {{ student_form.subject_combination.label }}
+                <select id="id_subject_combination" name="subject_combination" required>
+                    <option value="" selected>--------------</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline common-field-size" data-mdb-input-init>
+                {{ student_form.medium.label }} <br>
+                {{ student_form.medium }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline common-field-size" data-mdb-input-init>
+                {{ student_form.year_of_admission.label }}
+                {{ student_form.year_of_admission }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline common-field-size" data-mdb-input-init>
+                {{ student_form.status.label }} <br>
+                {{ student_form.status }}
+            </div>
+        </div>
+    </section>
+    <!-- Accademic Details End -->
+    <!-- SSC START -->
+    <section class="row mt-3">
+        <div class="bg-primary my-3"><h3>SSC Details</h3></div>
+
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.ssc_hall_ticket.label }}
+                {{ student_form.ssc_hall_ticket }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.ssc_school_name.label }}
+                {{ student_form.ssc_school_name }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.ssc_year_of_study.label }}
+                {{ student_form.ssc_year_of_study }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.ssc_marks.label }}
+                {{ student_form.ssc_marks }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.ssc_marks_file.label }}
+                {{ student_form.ssc_marks_file }}
+            </div>
+        </div>
+    </section>
+     <!-- SSC END -->
+      <!-- Intermediate Start -->
+    <section class="row mt-3">
+        <div class="bg-primary my-3"><h3>Intermediate Details</h3></div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.intermediate_hall_ticket_no.label }}
+                {{ student_form.intermediate_hall_ticket_no }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.intermediate_college_name.label }}
+                {{ student_form.intermediate_college_name }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.intermediate_year_of_study.label }}
+                {{ student_form.intermediate_year_of_study }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.intermediate_marks.label }}
+                {{ student_form.intermediate_marks }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.intermediate_marks_file.label }}
+                {{ student_form.intermediate_marks_file }}
+            </div>
+        </div>
+    </section>
+    <!-- Intermediate End -->
+    <!-- Aadhar & Income Start -->
+    <section class="row mt-3">
+        <div class="bg-primary my-3"><h3>student_form Documents</h3></div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.aadhar_no.label }}
+                {{ student_form.aadhar_no }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.aadhar_file.label }}
+                {{ student_form.aadhar_file }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.income_certificate_no.label }}
+                {{ student_form.income_certificate_no }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.income_certificate_file.label }}
+                {{ student_form.income_certificate_file }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.caste_certificate_no.label }}
+                {{ student_form.caste_certificate_no }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-outline" data-mdb-input-init>
+                {{ student_form.caste_certificate_file.label }}
+                {{ student_form.caste_certificate_file }}
+            </div>
+        </div>
+    </section>
+    
+    <div class="col-12 mt-5 mb-5">
+        <button class="btn btn-primary" type="submit" data-mdb-ripple-init>Save&Next</button>
+    </div>
+</form>
+{% endblock %}

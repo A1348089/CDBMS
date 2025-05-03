@@ -1,0 +1,171 @@
+/* Styles for messages and form */
+.common-field-size {
+    width: 200px; /* Adjust width */
+    max-width: 80%; /* Ensure the max width */
+    overflow: hidden; /* Hide the scrollbar */
+    position: relative;
+}
+
+.common-field-size select {
+    width: 100%; /* Make sure the dropdown takes full width */
+    height: auto; /* Adjust height as needed */
+    -ms-overflow-style: none;  /* Hides scrollbar in IE */
+    scrollbar-width: none;  /* Hides scrollbar in Firefox */
+}
+
+.common-field-size select::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in WebKit browsers (Chrome, Safari) */
+}
+.small-field-size {
+    width: 80px;  /* Set your desired width */
+    padding: 0.2rem;
+}
+
+.messages { 
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+.messages li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-left: 5px solid #f5c2c7;
+    position: relative;
+}
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.search { 
+    width: 300px;
+    font-size: 14px;
+    padding: 5px;
+}
+.messages { 
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+.messages li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-left: 5px solid #f5c2c7;
+    position: relative;
+}
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+/* Search Bar */
+#search {
+    border-radius: 8px;
+    border: 2px solid #007bff;
+}
+
+/* Dropdown Styling */
+.dropdown-toggle {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item input {
+    margin-right: 8px;
+}
+
+/* Table Styling */
+.custom_table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.custom_table th, .custom_table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.custom_table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.custom_table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Pagination */
+.pagination .page-item .page-link {
+    border-radius: 6px;
+    margin: 0 5px;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+.btn-info, .btn-danger {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.custom_card {
+    margin: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

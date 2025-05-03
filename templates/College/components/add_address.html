@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    /* Styles for messages and form */
+    .common-field-size {
+        width: 200px;
+        max-width: 80%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .common-field-size select {
+        width: 100%;
+        height: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .common-field-size select::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .small-field-size {
+        width: 80px;
+        padding: 0.2rem;
+    }
+
+    .messages { 
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+    }
+    .messages li {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f8d7da;
+        border-left: 5px solid #f5c2c7;
+        position: relative;
+    }
+    .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        cursor: pointer;
+    }
+    .form-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+</style>
+
+<section class="container">
+    <form action="{% url 'manage_address_details' entity_type entity.id %}" method="post">
+        {% csrf_token %}
+        
+        <!-- Address Section -->
+        <section class="row mt-3" id="address_section">
+            <div class="bg-primary my-3"><h3>Address</h3></div>
+            
+            <div class="col-md-1 mx-1">
+                {{ address_form.doorNo.label }}
+                {{ address_form.doorNo }}
+            </div>
+            <div class="col-md-2 mx-1">
+                {{ address_form.village.label }}
+                {{ address_form.village }}
+            </div>
+            <div class="col-md-2 mx-1">
+                {{ address_form.street.label }}
+                {{ address_form.street }}
+            </div>
+            <div class="col-md-2 mx-1">
+                {{ address_form.mandal.label }}
+                {{ address_form.mandal }}
+            </div>
+            <div class="col-md-2 mx-1 common-field-size">
+                {{ address_form.state.label }}
+                {{ address_form.state }}
+            </div>
+            <div class="col-md-2 mx-1">
+                {{ address_form.district.label }}
+                {% if address_form.instance.district %}
+                    {{ address_form.district }}
+                {% else %}
+                    <select id="id_district" name="district" class="form-control">
+                        <option value="">Select District</option>
+                    </select>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-2 mx-1">
+                {{ address_form.pin_code.label }}
+                {{ address_form.pin_code }}
+            </div>
+
+            <div class="col-12 mt-5 mb-5 d-flex justify-content-between">
+                <a href="{% url 'manage_bank_details' entity_type entity.id %}">Skip</a>
+                <button class="btn btn-primary" type="submit" data-mdb-ripple-init>Save&Next</button> 
+            </div>
+        </section>
+    </form>
+</section>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#id_state').change(function(){
+            var state_id = $(this).val();
+            var entityType = "{{ entity_type }}";  // Get entity type dynamically
+
+            if (state_id) {
+                $.ajax({
+                    url: "{% url 'get_districts' %}",
+                    type: "GET",
+                    data: { state_id: state_id },
+                    dataType: "json",
+                    success: function(response) {
+                        console.log("Response received:", response);
+
+                        var districtDropdown = $('#id_district');
+                        districtDropdown.empty();
+                        districtDropdown.append('<option value="">Select District</option>');
+
+                        if (response.districts && response.districts.length > 0) {
+                            $.each(response.districts, function(index, district) {
+                                let option = `<option value="${district.id}">${district.district}</option>`;
+                                districtDropdown.append(option);
+                            });
+                        } else {
+                            districtDropdown.append('<option value="">No districts available</option>');
+                        }
+
+                        districtDropdown.trigger("change");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching districts:", error);
+                    }
+                });
+            } else {
+                $('#id_district').empty().append('<option value="">Select District</option>').trigger("change");
+            }
+        });
+    });
+</script>
+{% endblock %}

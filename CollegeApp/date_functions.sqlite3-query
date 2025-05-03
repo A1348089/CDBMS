@@ -1,0 +1,8 @@
+-- database: ../db.sqlite3
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM CollegeApp_staff;
+SELECT strftime('%Y', date_of_appointment_govt_service) FROM CollegeApp_staff 
+where strftime('%Y', date_of_appointment_govt_service)<='2010'
+    -- Add conditions from filters

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}
+View All Staffs
+{% endblock %}
+{% block body %}
+<div class="container-fluid mt-5">
+    <h2>Staff list</h2>
+    <form id="filter-form" method="get" action="{% url 'staff_list' %}">
+        {% csrf_token %}
+        <section class="row m-3">
+            <div class="col-md-2 ">
+                {{ form.experience.label_tag }} <br>
+                {{ form.experience }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.staff_type.label_tag }} {{ form.staff_type }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.department.label_tag }} {{ form.department }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.gender.label_tag }} {{ form.gender }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.status.label_tag }} {{ form.status }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.state.label_tag }} {{ form.state }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.district.label }}
+                <select id="id_district" name="district">
+                    <option value="">Select District</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                {{ form.is_hod }}
+                {{ form.is_hod.label_tag }}
+            </div>
+        </section>
+        <section class="row mt-3">
+            <div class="mt-4 d-flex justify-content-end">
+                <input class="btn btn-primary" type="submit" value="Filter"/>
+            </div>
+        </section>
+    </form>
+    <div class="container-fluid">
+        <div class="row mt-3 mb-3">
+            <div class="col-md-4">
+                <input type="text" id="search_staff" class="form-control search" placeholder="Search by Staff ID No or Mobile No">
+            </div>
+            <div class="col-md-2">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle border border-4" type="button" id="columnDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Columns
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="columnDropdown">
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="staff_id" checked> Staff No</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="cfms_id" checked> CFMS ID</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="staff_type" checked> Staff type</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="first_name" checked> First Name</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="last_name" checked> Last Name</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="mobile_no" checked> Mobile No</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="email" checked> Email</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="gender"> Gender</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="date_of_birth"> Date of Birth</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="status" checked> Status</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="designation" checked> Designation</label></li>
+
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="department" checked> Department</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="is_hod"> is hod</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="salary"> Salary</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="previous_working_station"> Previous working station</label></li> 
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="transferred_college_name">Transferred college name</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="doj_in_govt_service"> Date of Joining in Govt. Service</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="doj_in_college"> Date of Joining in College</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="date_of_exite"> Date of Exit</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="threshold_year"> Experience</label></li>
+                        
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="bank__bank_account_num"> Account No</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="bank__bank_name__bank"> Bank Name</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="bank__ifsc_code"> IFSC</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="bank__branch_name"> Branch</label></li>
+
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__doorNo"> Door No</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__village"> Village/Town</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__street"> street</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__mandal"> Mandal</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__district__district"> District</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__state__name"> State</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="columns" value="address__pin_code"> PinCode</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success" id="download-staff-excel">Download Excel</button>
+            </div>
+            <div class="col-md-3">
+                <nav aria-label=" Page navigation">
+                    <ul class="pagination d-flex justify-content-end">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                    First
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                    Previous
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                        </li>
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                    Next
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                    Last
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="display custom_table table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Staff Type</th>
+                    <th>Name</th>
+                    <th>Phone No</th>
+                    <th>Gender</th>
+                    <th>Department</th>
+                    <th>DOJ</th>
+                    <th>Status</th>
+                    <th>DOJ Govt.</th>
+                    <th>Exp.</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="staff-body">
+                {% for staff in page_obj %}
+                <tr>
+                    <td>{{ staff.staff_id }}</td>
+                    <td>{{ staff.staff_type }}</td>
+                    <td>{{ staff.first_name }} {{ staff.last_name }}</td>
+                    <td>{{ staff.mobile_no }}</td>
+                    <td>{{ staff.gender }}</td>
+                    <td>{{ staff.department }}</td>
+                    <td>{{ staff.doj_in_college }}</td>
+                    <td>{{ staff.status }}</td>
+                    <td>{{ staff.doj_in_govt_service }}</td>
+                    <td>{{ staff.experience }}</td>
+                    <td>
+                        <a href="{% url 'view_staff' staff.id %}" class="btn btn-info btn-sm">View</a>
+                        <a href="{% url 'delete_staff' staff.id %}" class="btn btn-info btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No staff records found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

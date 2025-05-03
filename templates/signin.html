@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block contentRegister %}
+<div class="container" style="max-width: 400px;
+        margin: 100px auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;">
+    <h2 class="text-center mb-4">Login</h2>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <center>{{ error }}</center>
+    </div>
+    {% endif %}
+    {% if msg %}
+    <div class="alert alert-success" role="alert">
+        <center>{{ msg }}</center>
+    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.email.label }}
+            {{ form.email }}
+        </div>
+        <div>
+            {{ form.password.label }}
+            {{ form.password }}
+        </div>
+        <button type="submit">Login</button>
+
+        <h6>Forgot password? <a href="{% url 'forgotpassword_college' %}">Click Here...</a></h6>
+        <h6>Don't have an account<a href="{% url 'signup' %}">Register Here.......</a></h6>
+    </form>
+</div>
+{% endblock %}

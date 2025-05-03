@@ -1,0 +1,331 @@
+{% extends "College_Home.html" %}
+{% load static %}
+{% block contentRegister %}{% endblock %}
+{% block body %}
+<style>
+    /* Styles for messages and form */
+    .common-field-size {
+        width: 200px; /* Adjust width */
+        max-width: 80%; /* Ensure the max width */
+        overflow: hidden; /* Hide the scrollbar */
+        position: relative;
+    }
+
+    .common-field-size select {
+        width: 100%; /* Make sure the dropdown takes full width */
+        height: auto; /* Adjust height as needed */
+        -ms-overflow-style: none;  /* Hides scrollbar in IE */
+        scrollbar-width: none;  /* Hides scrollbar in Firefox */
+    }
+
+    .common-field-size select::-webkit-scrollbar {
+        display: none; /* Hides scrollbar in WebKit browsers (Chrome, Safari) */
+    }
+    .small-field-size {
+        width: 80px;  /* Set your desired width */
+        padding: 0.2rem;
+    }
+
+    .messages { 
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+    }
+    .messages li {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f8d7da;
+        border-left: 5px solid #f5c2c7;
+        position: relative;
+    }
+    .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        cursor: pointer;
+    }
+    .form-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+</style>
+<form action="{% url 'student_update' id=student.id %}" method="post" class="container" enctype="multipart/form-data">
+    {% csrf_token %}
+    <article class="row mt-3">
+        <div class="col-md-9"> <!-- Column 1 start -->
+
+            <section class="row">  <!-- Student Details End -->
+                <div class="col-md-3">
+                    {{ form.OAMDC_NO.label }}
+                    {{form.OAMDC_NO}}
+                </div>
+                
+                <div class="col-md-3">
+                    {{ form.first_name.label }}
+                    {{form.first_name}}
+                </div>
+
+                <div class="col-md-3">
+                    {{form.last_name.label}}
+                    {{form.last_name}}
+                </div>
+                <div class="col-md-3">
+                    {{form.mother_tongue.label}}
+                    {{form.mother_tongue}}
+                </div>
+            </section>
+
+            <section class="row mt-2">
+                <div class="col-md-3">
+                    {{form.nationality.label}}
+                    {{form.nationality}}
+                </div>
+                <div class="col-md-3">
+                    {{form.place_of_birth.label}}
+                    {{form.place_of_birth}}
+                </div>
+                <div class="col-md-3">
+                    {{form.mobile_no.label}}
+                    {{form.mobile_no}}
+                </div>
+                <div class="col-md-3">
+                    {{form.email.label}}
+                    {{form.email}}
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    {{form.blood_group.label}}
+                    {{form.blood_group}}
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-2">
+                        {{form.date_of_birth.label}}
+                        {{form.date_of_birth}}
+                        <!-- <input type="date" name="date_of_birth" id="date_of_birth" value="{{form.date_of_birth.value}}"> -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {{form.gender.label}}
+                    {{form.gender}}
+                </div>
+            </section>
+        </div> <!-- Column 1 End -->
+        <div class="col-md-2"> <!-- Column 2 Start -->
+            <div class="card">
+                <label for="form_pic">
+                    {% if form.instance.pic %}
+                        <img src="{{ form.instance.pic.url }}" class="card-img-top" alt="Profile Image" id="profilePreview">
+                    {% else %}
+                        <img src="{% static 'img/profile.png' %}" class="card-img-top" alt="Profile Image" id="profilePreview">
+                    {% endif %}
+                </label>
+
+                <div class="card-body">
+                    <div class="mb-2">
+                        <input type="file" id="form_pic" name="{{ form.pic.name }}" style="display: none;" onchange="previewImage(event)">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('form_pic').click()">Change</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Column 2 End -->
+
+        <script>
+            function previewImage(event) {
+                var output = document.getElementById('profilePreview');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function () {
+                    URL.revokeObjectURL(output.src); // Free up memory
+                }
+            }
+        </script>
+        <!-- Student Form Details End -->
+        <!-- Academic Details Start -->
+        <section class="row mt-3">
+            <div class="bg-primary my-3">
+                <h3>Examination Details</h3>
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.program.label }}
+                {{ form.program }}
+            </div>
+            <div class="col-md-2 common-field-size">
+                {{ form.subject_combination.label }}
+                {% if form.instance.subject_combination %}
+                    {{ form.subject_combination }}
+                {% else %}
+                    <select name="subject_combination" required id="id_subject_combination">
+                        <option value="">Select</option>
+                    </select>
+                {% endif %}
+                
+            </div>
+            <div class="col-md-2">
+                {{ form.medium.label }} <br>
+                {{ form.medium }}
+            </div>
+            <div class="col-md-2">
+                {{ form.year_of_admission.label }}
+                {{ form.year_of_admission }}
+            </div>
+            <div class="col-md-2">
+                {{ form.status.label }} <br>
+                {{ form.status }}
+            </div>
+        </section>
+        <!-- Academic Details End -->
+
+        <!-- SSC Start -->
+        <section class="row mt-3">
+            <div class="bg-primary my-3"><h3>SSC Details</h3></div>
+            <div class="col-md-2">
+                {{ form.ssc_hall_ticket.label }}
+                {{ form.ssc_hall_ticket }}
+            </div>
+            <div class="col-md-2">
+                {{ form.ssc_school_name.label }}
+                {{ form.ssc_school_name }}
+            </div>
+            <div class="col-md-2">
+                {{ form.ssc_year_of_study.label }}
+                {{ form.ssc_year_of_study }}
+            </div>
+            <div class="col-md-2">
+                {{ form.ssc_marks.label }}
+                {{ form.ssc_marks }}
+            </div>
+            <div class="col-md-2">
+                <label for="ssc_marks_file">SSC Marks File</label>
+                {% if form.instance.ssc_marks_file %}
+                    <p id="ssc_marks_file_name">{{ form.instance.ssc_marks_file.name }}</p>
+                {% else %}
+                    <p id="ssc_marks_file_name">No file chosen</p>
+                {% endif %}
+                <input type="file" id="ssc_marks_file" name="{{ form.ssc_marks_file.name }}" style="display: none;" onchange="updateFileName('ssc_marks_file')">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('ssc_marks_file').click()">Change</button>
+            </div>
+        </section>
+        <!-- SSC End -->
+
+        <!-- Intermediate Start -->
+        <section class="row mt-3">
+            <div class="bg-primary my-3"><h3>Intermediate Details</h3></div>
+            <div class="col-md-2">
+                {{ form.intermediate_hall_ticket_no.label }}
+                {{ form.intermediate_hall_ticket_no }}
+            </div>
+            <div class="col-md-2">
+                {{ form.intermediate_college_name.label }}
+                {{ form.intermediate_college_name }}
+            </div>
+            <div class="col-md-2">
+                {{ form.intermediate_year_of_study.label }}
+                {{ form.intermediate_year_of_study }}
+            </div>
+            <div class="col-md-2">
+                {{ form.intermediate_marks.label }}
+                {{ form.intermediate_marks }}
+            </div>
+            <div class="col-md-2">
+                <label for="intermediate_marks_file">Intermediate Marks File</label>
+                {% if form.instance.intermediate_marks_file %}
+                    <p id="intermediate_marks_file_name">{{ form.instance.intermediate_marks_file.name }}</p>
+                {% else %}
+                    <p id="intermediate_marks_file_name">No file chosen</p>
+                {% endif %}
+                <input type="file" id="intermediate_marks_file" name="{{ form.intermediate_marks_file.name }}" style="display: none;" onchange="updateFileName('intermediate_marks_file')">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('intermediate_marks_file').click()">Change</button>
+            </div>
+        </section>
+        <!-- Intermediate End -->
+
+        <!-- Aadhar & Income Start -->
+        <section class="row mt-3">
+            <div class="bg-primary my-3"><h3>Student Form Documents</h3></div>
+            <div class="col-md-2">
+                {{ form.aadhar_no.label }}
+                {{ form.aadhar_no }}
+            </div>
+            <div class="col-md-2">
+                <label for="aadhar_file">Aadhar File</label>
+                {% if form.instance.aadhar_file %}
+                    <p id="aadhar_file_name">{{ form.instance.aadhar_file.name }}</p>
+                {% else %}
+                    <p id="aadhar_file_name">No file chosen</p>
+                {% endif %}
+                <input type="file" id="aadhar_file" name="{{ form.aadhar_file.name }}" style="display: none;" onchange="updateFileName('aadhar_file')">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('aadhar_file').click()">Change</button>
+            </div>
+            <div class="col-md-2">
+                {{ form.income_certificate_no.label }}
+                {{ form.income_certificate_no }}
+            </div>
+            <div class="col-md-2">
+                <label for="income_certificate_file">Income Certificate File</label>
+                {% if form.instance.income_certificate_file %}
+                    <p id="income_certificate_file_name">{{ form.instance.income_certificate_file.name }}</p>
+                {% else %}
+                    <p id="income_certificate_file_name">No file chosen</p>
+                {% endif %}
+                <input type="file" id="income_certificate_file" name="{{ form.income_certificate_file.name }}" style="display: none;" onchange="updateFileName('income_certificate_file')">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('income_certificate_file').click()">Change</button>
+            </div>
+            <div class="col-md-2">
+                {{ form.caste_certificate_no.label }}
+                {{ form.caste_certificate_no }}
+            </div>
+            <div class="col-md-2">
+                <label for="caste_certificate_file">Caste Certificate File</label>
+                {% if form.instance.caste_certificate_file %}
+                    <p id="caste_certificate_file_name">{{ form.instance.caste_certificate_file.name }}</p>
+                {% else %}
+                    <p id="caste_certificate_file_name">No file chosen</p>
+                {% endif %}
+                <input type="file" id="caste_certificate_file" name="{{ form.caste_certificate_file.name }}" style="display: none;" onchange="updateFileName('caste_certificate_file')">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('caste_certificate_file').click()">Change</button>
+            </div>
+        </section>
+
+    </article>
+    <div class="col-12 mt-5 mb-5 d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<script>
+   $(document).ready(function(){
+    $('#id_program').change(function(){
+        var program_id = $(this).val(); // get program value
+        if(program_id){
+            $.ajax({
+                url : "{% url 'subject_combinations' %}",
+                type : "GET",
+                data : { program_id: program_id },
+                dataType: "json",
+                success: function(response){
+                    $('#id_subject_combination').empty().append('<option value="">Select</option>');
+                    if(response.combinations.length > 0){
+                        $.each(response.combinations, function(index, combination){
+                            $('#id_subject_combination').append(
+                                `<option value="${combination.id}">${combination.combination_short_form} (${combination.combination_full_form})</option>`
+                            );
+                        });
+                    } else {
+                        $('#id_subject_combination').append('<option value="">No subject combination available</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching subject combinations:", error);
+                }
+            });
+        } else {
+            $('#id_subject_combination').empty().append('<option value="">Select</option>');
+        }
+    });
+});
+</script>
+{% endblock %}

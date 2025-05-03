@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contentRegister %}{% endblock %}
+{% block body %}
+<main class="container">
+    <article class="row mt-3">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {{ message }}
+                        <button class="close-btn" type="button" onclick="closeMessage(this);">&times;</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <script>
+            // Function to close the message on button click
+            function closeMessage(button) {
+                // Find the parent <li> element and hide it
+                const messageElement = button.closest('li');
+                messageElement.style.display = 'none';
+            }
+        </script>
+        
+        <div><h3>Staff Details</h3></div>
+        <div class="col-md-10">
+            <section class="row">
+                <div class="col-md-3">
+                    <p class="form-label">Staff Type</p>
+                    <p>{{ staff.staff_type }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Staff ID</p>
+                    <p>{{ staff.staff_id }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">CFMS ID</p>
+                    <p>{{ staff.cfms_id }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Salutation</p>
+                    <p>{{ staff.salutation }}</p>
+                </div>
+            </section>
+
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    <p class="form-label">First Name</p>
+                    <p>{{ staff.first_name }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Last Name</p>
+                    <p>{{ staff.last_name }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Date of Birth</p>
+                    <p>{{ staff.date_of_birth }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Mobile Number</p>
+                    <p>{{ staff.mobile_no }}</p>
+                </div>
+            </section>
+            <section class="row mt-3">
+                <div class="col-md-3">
+                    <p class="form-label">Email</p>
+                    <p>{{ staff.email }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="form-label">Gender</p>
+                    <p>{{ staff.gender }}</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Profile image upload -->
+        <div class="col-md-2">
+            <div class="card">
+                {% if staff.photo %}
+                    <img src="{{ staff.photo.url }}" alt="{{ staff.first_name }} {{ staff.last_name }}">
+                {% else %}
+                    <img src="{% static 'img/profile.png' %}" alt="Default Profile">
+                {% endif %}
+                <div class="card-body">
+                    <p class="form-label">{{ staff.last_name }}</p>
+                </div>
+            </div>
+        </div>
+    </article>
+    <!-- Address fields start -->
+    {% if staff.address %}
+    <section class="row mt-3">
+        <div style="display: flex; align-items: center;">
+            <h3>Address</h3>
+            <a class="btn text-primary" href="{% url "manage_address_details" entity_type='staff' id=staff.id %}">Edit</a>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">DoorNo</p>
+            <p>{{ staff.address.doorNo }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Village</p>
+            <p>{{ staff.address.village }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Street</p>
+            <p>{{ staff.address.street }}</p>
+        </div>
+        <div class="col-md-2 ">
+            <p class="form-label">Mandal</p>
+            <p>{{ staff.address.mandal }}</p>
+        </div>
+        <div class="col-md-2 ">
+            <p class="form-label">District</p>
+            <p>{{ staff.address.district }}</p>
+        </div>
+        <div class="col-md-2 ">
+            <p class="form-label">State</p>
+            <p>{{ staff.address.state }}</p>
+        </div>
+    </section>
+    <section class="row mt-3">
+        <div class="col-md-2">
+            <p class="form-label">Pincode</p>
+            <p>{{ staff.address.pin_code }}</p>
+        </div>
+    </section>
+{% endif %}
+<!-- Address fields end -->
+    <!-- Designation and Staff Status -->
+    <section class="row mt-3" >
+        <div><h3>Designation</h3></div>
+        <div class="col-md-2" id="dept_container">
+            <p class="form-label">Department</p>
+            <p>{{ staff.department }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Is HOD</p>
+            <p>{{ staff.is_hod }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Status</p>
+            <p>{{ staff.status }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">Designation</p>
+            <p>{{ staff.designation }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">DOJ in Govt. Service</p>
+            <p>{{ staff.doj_in_govt_service }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">DOJ in College</p>
+            <p>{{ staff.doj_in_college }}</p>
+        </div>
+    </section>
+    <section class="row mt-3">
+        <div class="col-md-2">
+            <p class="form-label">Salary</p>
+            <p>{{ staff.salary }}</p>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label">DOE from College</p>
+            <p>{{ staff.date_of_exite }}</p>
+        </div>
+    </section>
+    <!-- Other form fields for documents and bank details -->
+    <section class="row mt-3">
+        <div>
+            <h3>Staff Documents</h3>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label">Aadhar Number</p>
+            <p>{{ staff.aadhar_number }}</p>
+        </div>
+        <!-- <div class="col-md-3">
+            <p class="form-label">Aadhar File</p>
+            <p>{{ staff.aadhar_file }}</p>
+        </div> -->
+    </section>
+
+    {% if staff.bank %}
+        <section class="row mt-3">
+            <div style="display: flex; align-items: center;">
+                <h3>Bank Details</h3>
+                <a class="btn text-primary" href="{% url "manage_bank_details" entity_type='staff' id=staff.id %}">Edit</a>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Account Number</p>
+                <p>{{ staff.bank.bank_account_num }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Bank Name</p>
+                <p>{{ staff.bank.bank_name }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">Branch Name</p>
+                <p>{{ staff.bank.branch_name }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="form-label">IFSC Code</p>
+                <p>{{ staff.bank.ifsc_code }}</p>
+            </div>
+        </section>
+        {% else %}
+            <a class="btn text-primary" href="{% url "manage_bank_details" entity_type='staff' id=staff.id %}">Add Bank Details</a>
+    {% endif %}
+
+
+    <div class="col-12 mt-5 mb-5">
+        <a class="btn btn-primary" href="edit/">Edit</a>
+        <a class="btn btn-primary" href="delete/">Delete</a>
+    </div>
+</main>
+
+{% endblock %}
